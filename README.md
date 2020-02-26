@@ -19,9 +19,6 @@
 7. Large numbers are accepted for dependent value (ex: 4000)
 8. Negative numbers are accepted for dependent values (ex: -20)
 
-* (FAD) The keywords being written in upper case is right for the user story, but needs to be sentence case in the feature file. Also, set a scenario # as a best practice to prevent collissions.
-- https://cucumber.io/blog/bdd/getting-started-with-bdd-part-1/
-
 
 <br/><br/><br/>
 
