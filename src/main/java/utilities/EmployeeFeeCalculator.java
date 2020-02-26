@@ -27,7 +27,7 @@ public class EmployeeFeeCalculator {
         BigDecimal dependentsCount = new BigDecimal(dependents);
 
         BigDecimal feeSubTotal = (costOfEmployeeBenefitsPerYear
-                .add(costOfPerDependentBenefitsPerYear.multiply(dependentsCount))).divide(numPayChecksPerYear);
+                .add(costOfPerDependentBenefitsPerYear.multiply(dependentsCount))).divide(numPayChecksPerYear, 2, RoundingMode.HALF_UP);
 
         logCollector.debug("Cost for self + " + dependents + " dependents = " + feeSubTotal.toString());
 

@@ -8,23 +8,23 @@ import cucumber.api.java.en.And;
 
 public class DeleteEmployeeSteps {
 
-    @Given("^an Employer$")
-    public void an_employer() throws Throwable {
+    @Given("^S4 an Employer$")
+    public void s4_an_employer() throws Throwable {
         throw new PendingException();
     }
 
-    @When("^I click the Action X$")
-    public void i_click_the_action_x() throws Throwable {
+    @When("^S4 I click the Action X$")
+    public void s4_i_click_the_action_x() throws Throwable {
         throw new PendingException();
     }
 
-    @Then("^the employee should be deleted$")
-    public void the_employee_should_be_deleted() throws Throwable {
+    @Then("^S4 the employee should be deleted$")
+    public void s4_the_employee_should_be_deleted() throws Throwable {
         throw new PendingException();
     }
 
-    @And("^I am on the Benefits Dashboard page$")
-    public void i_am_on_the_benefits_dashboard_page() throws Throwable {
+    @And("^S4 I am on the Benefits Dashboard page$")
+    public void s4_i_am_on_the_benefits_dashboard_page() throws Throwable {
         throw new PendingException();
     }
 

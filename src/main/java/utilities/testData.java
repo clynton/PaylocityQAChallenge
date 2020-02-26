@@ -8,7 +8,7 @@ public class testData {
 		public static final String Title = "Benefits Dashboard";
 		
 		// we can set the URL here... or we can pull it from a property file :)
-		public static final String UrlPropertyNameInDataFile = "EmployeeAdminUrl";
+		public static final String UrlPropertyNameInDataFile = "EmployeeAdminPageUrl";
 
 		public static class PageTextFields
 		{

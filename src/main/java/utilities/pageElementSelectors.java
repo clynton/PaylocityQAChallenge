@@ -15,7 +15,7 @@ public class pageElementSelectors {
 
 		// best to add an ID for the button - or a name... but for now, we'll just check the text value to confirm
 		// could also have gone to the dependents field and tabbed to it (but more fields might be added)
-		public static final String SubmitEmployeeBtnCssSelector = "button.btn-primary";
+		public static final String SubmitEmployeeBtnCssSelector = "#employees-form button.btn-primary";
 
 		public static final String EmployeeTableRowsCssSelector = "#employee-table > tbody:nth-child(2) > tr";
 		public static final String EmployeeRowColFirstNameCssSelector = "td:nth-child(2)";

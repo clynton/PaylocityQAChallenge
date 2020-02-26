@@ -40,19 +40,11 @@
 						</property>
 					</properties>         
 					 <threadCount>1</threadCount>
-					<suiteXmlFiles>
-						<suiteXmlFile>testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
 				</configuration>
 				<dependencies>
 					<dependency>
 						<groupId>org.apache.maven.surefire</groupId>
 						<artifactId>surefire-junit47</artifactId>
-						<version>2.18.1</version>
-					</dependency>
-					<dependency>
-						<groupId>org.apache.maven.surefire</groupId>
-						<artifactId>surefire-testng</artifactId>
 						<version>2.18.1</version>
 					</dependency>
 				</dependencies>

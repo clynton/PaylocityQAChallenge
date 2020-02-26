@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.AssertJUnit;
+//import org.testng.AssertJUnit;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
@@ -31,8 +31,8 @@ public class AddEmployeeNoDiscountSteps {
 	private Integer dependentsUnderTest = 0;
 	private String pageCalcBenefitsForEntryUnderTest;
 
-	@Given("^I am on the Benefits Dashboard page$")
-	public void i_am_on_the_benefits_dashboard_page() throws Throwable {
+	@Given("^S1 I am on the Benefits Dashboard page$")
+	public void s1_i_am_on_the_benefits_dashboard_page() throws Throwable {
 		logCollector.info("opening browser");
 
 		driver = browserProvider.getBrowser(Browser.Chrome);
@@ -127,22 +127,22 @@ public class AddEmployeeNoDiscountSteps {
 		String actualTitle = driver.getTitle();
 
 		logCollector.debug("Loaded page - got title: '" + actualTitle + "'");
-
-		AssertJUnit.assertEquals(actualTitle, expectedTitle);
+	
+		Assert.assertEquals(expectedTitle, actualTitle);
 
 	}
 
-	@When("^I select Add Employee$")
-	public void i_select_add_employee() throws Throwable {
+	@When("^S1 I select Add Employee$")
+	public void s1_i_select_add_employee() throws Throwable {
 		// Click a button - found using xpath or css or whatever
 		// returns exception message if not there, but we can check for something else
 		String clickResult = buttonClicker.Click(driver, pageElementLocators.EmployeeAdminPage.AddEmployeeBtn,
 				configSettings.SeleniumBrowserDelayTimes.DelayAfterClickButton_ms);
-		AssertJUnit.assertEquals(clickResult, "");
+		Assert.assertEquals("", clickResult);
 	}
 
-	@Then("^I should be able to enter employee details$")
-	public void i_should_be_able_to_enter_employee_details() throws Throwable {
+	@Then("^S1 I should be able to enter employee details$")
+	public void s1_i_should_be_able_to_enter_employee_details() throws Throwable {
 
 		// enter employee data
 		// asserts for missing fields will occur automatically
@@ -156,25 +156,25 @@ public class AddEmployeeNoDiscountSteps {
 				.sendKeys("" + testData.EmployeeAdminPage.PageTextFields.Dependents);
 	}
 
-	@And("^the employee should save$")
-	public void the_employee_should_save() throws Throwable {
+	@And("^S1 the employee should save$")
+	public void s1_the_employee_should_save() throws Throwable {
 
 		// submit - get the button element and make sure it's the right one...
 		WebElement employeeSubmitBtn = driver.findElement(pageElementLocators.EmployeeAdminPage.SubmitEmployeeBtn);
 		String buttonText = employeeSubmitBtn.getText();
-		AssertJUnit.assertEquals(buttonText, testData.EmployeeAdminPage.PageTextFields.SubmitEmployeeBtnText);
+		Assert.assertEquals(testData.EmployeeAdminPage.PageTextFields.SubmitEmployeeBtnText, buttonText);
 
 		// ok - it's the right button, so go for it...
 
 		// returns exception message if not there, but we can check for something else
 		String clickResult = buttonClicker.Click(driver, pageElementLocators.EmployeeAdminPage.SubmitEmployeeBtn,
 				configSettings.SeleniumBrowserDelayTimes.DelayAfterClickButton_ms);
-		AssertJUnit.assertEquals(clickResult, "");
+		Assert.assertEquals("", clickResult);
 
 	}
 
-	@And("^I should see the employee in the table$")
-	public void i_should_see_the_employee_in_the_table() throws Throwable {
+	@And("^S1 I should see the employee in the table$")
+	public void s1_i_should_see_the_employee_in_the_table() throws Throwable {
 
 		// search for the new entry in the DB
 
@@ -182,8 +182,12 @@ public class AddEmployeeNoDiscountSteps {
 
 		boolean foundInsertedEntry = false;
 		int numEmployeeEntries = employeesList.size();
+		logCollector.debug("found " + numEmployeeEntries + " employee records (rows) to review");
 		for (int ix = 0; ix < numEmployeeEntries; ix++) {
 			WebElement elememployeeRow = employeesList.get(ix);
+
+			logCollector.debug("row " + ix + " has: " + elememployeeRow.getText());
+			
 			WebElement firstNameEntry = elememployeeRow
 					.findElement(pageElementLocators.EmployeeAdminPage.EmployeeRowColFirstName);
 			WebElement lastNameEntry = elememployeeRow
@@ -198,33 +202,42 @@ public class AddEmployeeNoDiscountSteps {
 			Integer dependentsVal = Integer.parseInt(dependentsEntry.getText());
 			String benefitsCostVal = benefitsCostEntry.getText();
 
-			logCollector.debug("Looking at entry: " + firstNameUnderTest + " " + rowLastNameVal + " " + dependentsVal
-					+ " " + benefitsCostVal);
+			logCollector.debug("Looking at entry: '" + rowFirstNameVal + "' '" + rowLastNameVal + 
+					"' '" + dependentsVal + "' with result '" + benefitsCostVal + "'");
+			logCollector.debug("Comparing values: '" +  testData.EmployeeAdminPage.PageTextFields.FirstName + "' '" + 
+					testData.EmployeeAdminPage.PageTextFields.LastName + "' '" + 
+					testData.EmployeeAdminPage.PageTextFields.Dependents + "'");
 
-			if (rowFirstNameVal == testData.EmployeeAdminPage.PageTextFields.FirstName
-					&& rowLastNameVal == testData.EmployeeAdminPage.PageTextFields.LastName
-					&& dependentsVal == testData.EmployeeAdminPage.PageTextFields.Dependents) {
+			if (rowFirstNameVal.compareTo(testData.EmployeeAdminPage.PageTextFields.FirstName) == 0
+					&& rowLastNameVal.compareTo(testData.EmployeeAdminPage.PageTextFields.LastName) == 0
+					&& dependentsVal.compareTo(testData.EmployeeAdminPage.PageTextFields.Dependents) == 0) {
+				
+				logCollector.debug("Found the match!");
 				foundInsertedEntry = true;
 				firstNameUnderTest = rowFirstNameVal;
 				dependentsUnderTest = dependentsVal;
 				pageCalcBenefitsForEntryUnderTest = benefitsCostVal;
 
 				break;
+			} else {
+				logCollector.debug("No match: '" +  (rowFirstNameVal.compareTo(testData.EmployeeAdminPage.PageTextFields.FirstName) == 0) + "' '" + 
+						(rowLastNameVal.compareTo(testData.EmployeeAdminPage.PageTextFields.LastName) == 0) + "' '" + 
+						(dependentsVal.compareTo(testData.EmployeeAdminPage.PageTextFields.Dependents) == 0) + "'");
 			}
 		}
 
-		AssertJUnit.assertTrue(foundInsertedEntry);
+		Assert.assertTrue(foundInsertedEntry);
 	}
 
-	@And("^First Name does not begin with “A” or “a”$")
-	public void first_name_does_not_begin_with_a_or_a() throws Throwable {
+	@And("^S1 First Name does not begin with “A” or “a”$")
+	public void s1_first_name_does_not_begin_with_a_or_a() throws Throwable {
 
 		// grab value and set bool - could also get it in the cost validator
 		firstNameUnderTestStartsWithA = (firstNameUnderTest.compareToIgnoreCase("A") == 0); // 0 == same
 	}
 
-	@And("^the benefit cost calculations are correct$")
-	public void the_benefit_cost_calculations_are_correct() throws Throwable {
+	@And("^S1 the benefit cost calculations are correct$")
+	public void s1_the_benefit_cost_calculations_are_correct() throws Throwable {
 
 		// check the cost values
 
@@ -232,7 +245,7 @@ public class AddEmployeeNoDiscountSteps {
 		// "CalculateFee(1, true -and- false)"
 
 		// if name starts with A, they get a 10% discount
-		// this call is not explicitely needed, but good to check our own calc
+		// this call is not explicitly needed, but good to check our own calc
 		double amountForEmployeeWithDiscount = EmployeeFeeCalculator
 				.CalculateFee(testData.EmployeeAdminPage.PageTextFields.Dependents, firstNameUnderTestStartsWithA);
 
@@ -240,12 +253,12 @@ public class AddEmployeeNoDiscountSteps {
 		// firstNameUnderTest == testData.EmployeeAdminPage.PageTextFields.FirstName
 		double amountForThisEmployee = EmployeeFeeCalculator.CalculateFee(firstNameUnderTest, dependentsUnderTest);
 
-		logCollector.debug("Comparing Costs - 'A' employees: " + amountForEmployeeWithDiscount + " / This employee: "
-				+ amountForThisEmployee + " / Page value for employee: " + pageCalcBenefitsForEntryUnderTest);
+		logCollector.debug("Comparing Costs - 'A' employees: '" + amountForEmployeeWithDiscount + "' / This employee: '"
+				+ String.valueOf(amountForThisEmployee) + "' / Page value for employee: '" + pageCalcBenefitsForEntryUnderTest + "'");
 
-		Assert.assertEquals(amountForThisEmployee, pageCalcBenefitsForEntryUnderTest);
+		Assert.assertEquals(String.valueOf(amountForThisEmployee), pageCalcBenefitsForEntryUnderTest);
 
-		logCollector.debug("closeBrowsers... ");
+		logCollector.debug("All done - closing Browser(s)... ");
 		browserProvider.closeBrowsers();
 	}
 

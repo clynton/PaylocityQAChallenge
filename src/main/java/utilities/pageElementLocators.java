@@ -16,7 +16,7 @@ public class pageElementLocators {
 
 		public static final By EmployeeTableRows = By.cssSelector(pageElementSelectors.EmployeeAdminPage.EmployeeTableRowsCssSelector);
 		public static final By EmployeeRowColFirstName = By.cssSelector(pageElementSelectors.EmployeeAdminPage.EmployeeRowColFirstNameCssSelector);
-		public static final By EmployeeRowColLastName = By.cssSelector(pageElementSelectors.EmployeeAdminPage.LastNameCssPathSelector);
+		public static final By EmployeeRowColLastName = By.cssSelector(pageElementSelectors.EmployeeAdminPage.EmployeeRowColLastNameCssSelector);
 		public static final By EmployeeRowColDependents = By.cssSelector(pageElementSelectors.EmployeeAdminPage.EmployeeRowColDependentsCssSelector);
 		public static final By EmployeeRowColBenefitsCost = By.cssSelector(pageElementSelectors.EmployeeAdminPage.EmployeeRowColBenefitsCostCssSelector);
 		
